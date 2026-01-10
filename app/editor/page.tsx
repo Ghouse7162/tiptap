@@ -1,69 +1,62 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
 export default function EditorPage() {
+  const PAGE_HEIGHT = 1056 // 11in * 96px/in
+  const PAGE_WIDTH = 816   // 8.5in * 96px/in
+  const PAGE_PADDING = 32
+
+  // Tiptap editor
   const editor = useEditor({
     extensions: [StarterKit],
     content: '<p>Start typing your document here...</p>',
     editorProps: {
       attributes: {
-        class: 'prose max-w-full m-0 focus:outline-none',
+        class: 'prose max-w-full m-0 focus:outline-none break-words',
       },
     },
     immediatelyRender: false, // SSR fix
   })
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [pages, setPages] = useState<number[]>([1])
-
-  useEffect(() => {
-    if (!editor || !containerRef.current) return
-
-    const handleUpdate = () => {
-      const editorEl = containerRef.current!
-      const contentHeight = editorEl.scrollHeight
-      const pageHeight = 1056 // 11in * 96px/in
-
-      const neededPages = Math.ceil(contentHeight / pageHeight)
-      if (neededPages !== pages.length) {
-        const newPages = Array.from({ length: neededPages }, (_, i) => i + 1)
-        setPages(newPages)
-      }
-    }
-
-    editor.on('update', handleUpdate)
-    handleUpdate() // initial check
-
-    return () => {
-      editor.off('update', handleUpdate)
-    }
-  }, [editor, pages.length])
-
   return (
     <div className="min-h-screen bg-gray-200 p-10 flex justify-center">
-      <div className="space-y-10">
-        {pages.map((page) => (
-          <div
-            key={page}
-            className="bg-white shadow-md p-8"
+      <div
+        className="bg-white shadow-md p-8"
+        style={{
+          width: PAGE_WIDTH,
+          minHeight: PAGE_HEIGHT,
+          boxSizing: 'border-box',
+          border: '1px solid #ccc',
+          position: 'relative',
+        }}
+      >
+        {editor && <EditorContent editor={editor} />}
+        {/* Page break indicator */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '2px',
+            backgroundColor: '#aaa',
+          }}
+        >
+          <span
             style={{
-              width: '816px', // 8.5in * 96px/in
-              height: '1056px', // 11in * 96px/in
-              boxSizing: 'border-box',
-              border: '1px solid #ccc',
+              position: 'absolute',
+              bottom: '-20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontSize: '12px',
+              color: '#555',
             }}
           >
-            {page === 1 && editor && (
-              <div ref={containerRef}>
-                <EditorContent editor={editor} />
-              </div>
-            )}
-            {page > 1 && <div className="h-full"></div>}
-          </div>
-        ))}
+            Page 1 End
+          </span>
+        </div>
       </div>
     </div>
   )
