@@ -70,3 +70,34 @@ body {
     break-before: avoid !important;
   }
 }
+/* Page styles for editor */
+.page {
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: none;
+    margin: 0;
+  }
+
+  .page {
+    box-shadow: none;
+    margin-bottom: 0;
+    page-break-after: always;
+  }
+
+  .editor-content {
+    padding: 1in;
+    width: 8.5in;
+    min-height: 11in;
+    box-sizing: border-box;
+  }
+}

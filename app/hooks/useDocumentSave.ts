@@ -1,23 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import { Editor } from '@tiptap/react';
 
-export type SaveStatus = 'saving' | 'saved';
+export type SaveStatus = 'saved' | 'saving';
 
-export function useDocumentSave() {
+export const useDocumentSave = () => {
   const [status, setStatus] = useState<SaveStatus>('saved');
 
-  const saveDocument = () => {
+  const saveDocument = (content: any) => {
     setStatus('saving');
 
-    // simulate API save
+    // Simulate saving delay
     setTimeout(() => {
+      console.log('Document saved:', content);
       setStatus('saved');
-    }, 800);
+    }, 1000);
   };
 
-  return {
-    status,
-    saveDocument,
-  };
-}
+  return { status, saveDocument };
+};
