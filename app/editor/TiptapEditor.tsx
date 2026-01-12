@@ -1,14 +1,13 @@
 'use client';
 
 import React from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, type Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import { TextStyle } from '@tiptap/extension-text-style';
 import FontFamily from '@tiptap/extension-font-family';
 import Placeholder from '@tiptap/extension-placeholder';
-
 import { Toolbar } from './Toolbar';
 import { PaginationExtension } from './extensions/paginationExtension';
 import { PageBreak } from './extensions/PageBreak';
@@ -19,7 +18,7 @@ export const TiptapEditor = () => {
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const editor = useEditor({
-    immediatelyRender: false,
+    immediatelyRender: false, // <-- this fixes SSR error
     extensions: [
       StarterKit,
       Underline,
@@ -29,15 +28,17 @@ export const TiptapEditor = () => {
       PageBreak,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       Placeholder.configure({
-        placeholder: 'Start writing your document here...'
+        placeholder: 'Start writing your document here...',
+        showOnlyWhenEditable: true,
       }),
     ],
-    content: `<p></p>`, // Start blank
+    content: '', // empty so placeholder shows
     editorProps: {
       attributes: {
         class:
           'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none bg-white min-h-[1056px] shadow-xl mb-8 flex flex-col !max-w-none',
-        style: 'width: 8.5in; padding: 96px; font-family: "Times New Roman", Times, serif;',
+        style:
+          'width: 8.5in; padding: 96px; font-family: "Times New Roman", Times, serif;',
       },
     },
     onUpdate: ({ editor }) => {
@@ -49,10 +50,10 @@ export const TiptapEditor = () => {
   });
 
   return (
-    <div className="flex flex-col w-full items-center bg-gray-100 pb-10 min-h-screen">
+    <div className="flex flex-col w-full items-center bg-[#F3F4F6] pb-10 min-h-screen">
       <Toolbar editor={editor} status={status} />
-      <div className="mt-8 shadow-xl rounded-lg print:shadow-none print:m-0 print:w-full bg-white">
-        <EditorContent editor={editor} className="p-8 page" />
+      <div className="mt-8 shadow-xl print:shadow-none print:m-0 print:w-full bg-white">
+        <EditorContent editor={editor} />
       </div>
     </div>
   );
