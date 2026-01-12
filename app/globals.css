@@ -1,26 +1,72 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
+
+@theme {
+  --font-sans: "Arial, Helvetica, sans-serif";
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@layer utilities {
+  .text-balance { text-wrap: balance; }
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  font-family: var(--font-sans);
+}
+
+/* Page Break Styling */
+.page-break-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  background-color: #F3F4F6;
+  width: calc(100% + 192px);
+  margin-left: -96px;
+  margin-right: -96px;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media print {
+  @page { margin: 0mm; size: letter; }
+  body * { visibility: hidden; }
+  html, body { height: 100%; margin: 0 !important; padding: 0 !important; overflow: visible !important; background: white !important; }
+  main, div, section, nav, aside { margin: 0 !important; padding: 0 !important; width: auto !important; min-width: 0 !important; }
+  .ProseMirror, .ProseMirror * { visibility: visible; }
+  .ProseMirror {
+    position: absolute;
+    left: 0 !important;
+    top: 0 !important;
+    width: 8.5in !important;
+    padding: 1in !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+  .page-break-marker {
+    opacity: 0; 
+    height: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    break-after: always !important;
+    page-break-after: always !important;
+    break-before: avoid !important;
+  }
 }
