@@ -1,3 +1,14 @@
+## 🔗 Live Demo
+
+The project is deployed and can be accessed here:
+
+👉 https://tiptap-pi.vercel.app/editor
+
+You can open this link in any modern browser (desktop or mobile) to test:
+- Real-time pagination
+- Print-accurate A4 layout
+- Rich text formatting
+
 **Document Pagination Editor (Tiptap + Next.js)**
 
 Prototype built for the Full-Stack Intern Assignment – OpenSphere / LegalBridge.
