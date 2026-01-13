@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+**Document Pagination Editor (Tiptap + Next.js)**
 
-## Getting Started
+This project is a prototype built as part of the Full-Stack Intern Assignment for OpenSphere / LegalBridge.
 
-First, run the development server:
+The goal of the assignment is to design and build a Tiptap-based document editor with real-time pagination, allowing users to see exactly how their legal documents will appear when printed — similar to Google Docs or Microsoft Word.
 
-```bash
+🚀 Features Implemented
+✅ Real-Time Pagination
+
+Documents are visually split into distinct pages
+
+Page boundaries update dynamically as users type, delete, or paste content
+
+Clear separation between pages to reflect printed layout
+
+✅ Print-Accurate Layout
+
+A4 page size
+
+1-inch margins
+
+What you see in the editor matches what appears when printing (Ctrl + P)
+
+✅ Rich Text Editing
+
+Headings and paragraphs
+
+Bold, italic, underline
+
+Text alignment (left, center, right, justify)
+
+Bullet and numbered lists
+
+Font family selection
+
+✅ UX Improvements
+
+Placeholder text: “Start writing your document…”
+
+Placeholder disappears on first click
+
+Sticky, modern toolbar
+
+Visual page shadows and spacing similar to document editors
+
+🧠 Approach to Pagination
+
+Pagination is implemented by:
+
+Defining a fixed page height based on A4 dimensions
+
+Measuring rendered content height in the DOM
+
+Automatically inserting visual page breaks when content exceeds a page
+
+Recalculating page layout on every editor update to ensure correct reflow
+
+This ensures:
+
+Long paragraphs flow naturally across pages
+
+Editing content in the middle of a document reflows subsequent pages
+
+Formatting changes (font size, lists, headings) update pagination correctly
+
+⚠️ Trade-offs & Limitations
+
+Pagination is calculated on the client using DOM measurements, which may have minor performance overhead for very large documents
+
+Table pagination is basic and can be improved further
+
+Header/footer support is not implemented (optional enhancement)
+
+🔮 What I Would Improve With More Time
+
+Add page numbers and headers/footers
+
+Optimize pagination recalculation for very long documents
+
+Improve table and image pagination behavior
+
+Add export to PDF/DOCX using the same layout engine
+
+🛠️ Tech Stack
+
+Frontend: Next.js (App Router), React
+
+Editor: Tiptap
+
+Styling: Tailwind CSS
+
+Language: TypeScript
+
+▶️ Running the Project Locally
+Prerequisites
+
+Node.js (v18 or later)
+
+npm
+
+Steps
+# Clone the repository
+git clone https://github.com/Ghouse7162/tiptap.git
+
+# Navigate to the project directory
+cd tiptap_next
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open your browser and visit:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+http://localhost:3000/editor
 
-## Learn More
+🧪 Product Context
 
-To learn more about Next.js, take a look at the following resources:
+To better understand the real-world problem, I explored the existing LegalBridge drafting editor.
+While it supports rich text formatting, it does not visually indicate page boundaries, making it difficult for users to predict how documents will appear when printed for USCIS submission.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This prototype directly addresses that gap by introducing real-time pagination inside the editor.
